@@ -1,0 +1,53 @@
+﻿@model InterviewTest.Controllers.NewsletterListViewModel
+
+@{
+    ViewBag.Title = "Saved newsletters";
+}
+
+<div class="jumbotron">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="row">
+            @using (Html.BeginForm("create", "Newsletter", FormMethod.Post))
+            {
+                <h2>Create newsletters</h2>
+                <label>How many <input type="number" name="count" value="10"/></label>
+                <button class="btn btn-default" type="submit">Create newsletters</button>
+            }
+        </div>
+        <div class="row">
+            <h2>View sample newsletter</h2>
+            <a href="@Url.Action("sample", "newsletter")" class="btn btn-default">View</a>
+        </div>
+    </div>
+    
+    @if (Model.Newsletters.Any())
+    {
+        <div class="col-md-4">
+            <table class="table">
+                <tr><th>Id</th><th>Created At</th></tr>
+                @foreach (var newsletter in Model.Newsletters.OrderByDescending(n => n.Id))
+                {
+                    <tr>
+                        <td><a href="@Url.Action("Display", new {newsletter.Id})">@newsletter.Id</a></td>
+                        <td>@newsletter.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                    </tr>
+
+                }
+            </table>
+        </div>
+
+        <div class="col-md-4">
+            <h2>Delete all</h2>
+            @using (Html.BeginForm("deleteall", "Newsletter", FormMethod.Post))
+            {
+                <button type="submit" class="btn btn-default">Delete</button>
+            }
+        </div>
+
+    }
+
+</div>

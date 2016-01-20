@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Vidados newsletter generation</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Generate entities</h2>
+        <p>
+            To generate 10 hosts and 10 trips, click here.
+        </p>
+        <p>
+            @using (Html.BeginForm("createtripsandsellers", "Home", FormMethod.Post))
+            {
+                <button class="btn btn-default" type="submit">Generate entities</button>
+            }
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>View newsletters</h2>
+        
+        <p><a class="btn btn-default" href="@Url.Action("list", "newsletter")">View newsletters</a></p>
+    </div>
+</div>

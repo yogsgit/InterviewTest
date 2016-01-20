@@ -1,0 +1,14 @@
+﻿@model InterviewTest.Controllers.AccountViewModel
+
+@{
+    ViewBag.Title = "Account page";
+}
+
+@using (Html.BeginForm("setaccountdetails", "home", FormMethod.Post))
+{
+    <label>
+        Your name: @Html.TextBoxFor(m => m.Name)
+    </label>
+
+    <button type="submit">Update</button>
+}

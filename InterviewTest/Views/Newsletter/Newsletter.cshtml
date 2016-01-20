@@ -1,0 +1,58 @@
+﻿@using InterviewTest.Controllers
+@model InterviewTest.Controllers.NewsletterViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+    <style>
+        body {
+            width: 600px;
+        }
+        .item {
+            display: inline-block;
+            width: 48%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .item img {
+            width: 60%;
+        }
+
+        .host img {
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <p>Hi subscriber,</p>
+    <p>Take a look at the amazing hosts and sellers new on Vidados!</p>
+
+    <div class="item-container">
+        @foreach (var item in Model.Items)
+        {
+            <div class="item">
+                @if (item is NewsletterTripViewModel)
+                {
+                    @Html.Partial("TripItem", item)
+                }
+                else if (item is NewsletterHostViewModel)
+                {
+                    @Html.Partial("HostItem", item)
+                }
+            </div>
+        }
+    </div>
+    <p>
+        Come and book with us soon!
+    </p>
+</div>
+</body>
+</html>
