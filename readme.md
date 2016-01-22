@@ -36,3 +36,7 @@ There's no right way to achieve this.  Please feel free to ask any questions.  U
 How to submit
 -------------
 Ideally a pull request but if you're not familiar with this then please zip up and send the repo back.
+
+How long can I take
+-------------------
+You can take as long as you want.  It should be possible to get something useful done in around an hour.  Please say if you feel this is not realistic.
