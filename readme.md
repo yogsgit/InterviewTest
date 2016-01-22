@@ -16,7 +16,7 @@ b) have this setting persisted so that all generated emails use this setting unt
 
 Task 2: Make the allocation of trips and hosts *fair*.
 
-Hosts get upset if their trips are featured less than other hosts'.  Therefore we want it so that when a newsletter is generated, preference is given to those trips and hosts that have thus far featured on fewer newsletters.
+In order to be fair to all hosts, we want it so that when a newsletter is generated, preference is given to those trips and hosts that have thus far featured on fewer newsletters.
 
 How to get going
 ----------------
