@@ -8,13 +8,13 @@ The task
 --------
 There are 2 elements to this task.  You should complete at least one - bonus points for both:
 
-1. Allow the order and quantity of trips and hosts to be specified.  For example we might decide we want newsletters to have 3 trips followed by 2 hosts followed by 3 trips (TTTHHTTT).  
+Task 1: Allow the order and quantity of trips and hosts to be specified.  For example we might decide we want newsletters to have 3 trips followed by 2 hosts followed by 3 trips (TTTHHTTT).  
 
 It should be possible to
 a) enter this setting through the web interface
 b) have this setting persisted so that all generated emails use this setting until it is changed
 
-2. Make the allocation of trips and hosts *fair*.
+Task 2: Make the allocation of trips and hosts *fair*.
 
 Hosts get upset if their trips are featured less than other hosts'.  Therefore we want it so that when a newsletter is generated, preference is given to those trips and hosts that have thus far featured on fewer newsletters.
 
