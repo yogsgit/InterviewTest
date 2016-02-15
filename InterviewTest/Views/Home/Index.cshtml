@@ -1,11 +1,10 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-
+@model InterviewTest.Controllers.TripHostOrderViewModel
 <div class="jumbotron">
     <h1>Vidados newsletter generation</h1>
 </div>
-
 <div class="row">
     <div class="col-md-4">
         <h2>Generate entities</h2>
@@ -21,7 +20,21 @@
     </div>
     <div class="col-md-4">
         <h2>View newsletters</h2>
-        
+
         <p><a class="btn btn-default" href="@Url.Action("list", "newsletter")">View newsletters</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Set newsletter format</h2>
+        <p>
+            Order of Trips(T) and Hosts(H) for a newsletter. e.g. TTTHHT Default is TTHH.
+        </p>
+        <p>
+            @using (Html.BeginForm("SetNewsletterFormat", "Home", FormMethod.Post))
+            {
+                @Html.TextBoxFor(m => m.Order)
+
+                <button class="btn btn-default" type="submit">Set Order</button>
+            }
+        </p>
     </div>
 </div>

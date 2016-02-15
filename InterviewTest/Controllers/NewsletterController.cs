@@ -14,20 +14,57 @@ namespace InterviewTest.Controllers
         public ActionResult Create(int count)
         {
             var db = GetDatabase();
+            // [YOGESH] - Fetch the TripHostOrder setting from the DB.
+            var tripHostOrder = db.GetAll<Settings>().Select(h => h.TripHostOrder).FirstOrDefault();
+            // [YOGESH] - Count the number of Trips and Hosts for the newsletter.
+            int countT = tripHostOrder.ToCharArray().Where(m => m.Equals('T')).Count();
+            int countH = tripHostOrder.ToCharArray().Where(m => m.Equals('H')).Count();
 
-            var hostIds = db.GetAll<Host>().Select(h => h.Id).ToArray();
-            var tripIds = db.GetAll<Trip>().Select(t => t.Id).ToArray();
-
+            #region [YOGESH] - For tasks 1 & 2
+            var hosts = db.GetAll<Host>().OrderBy(m => m.UseCount).ToList();
+            var trips = db.GetAll<Trip>().OrderBy(m => m.UseCount).ToList();
             for (int i = 0; i < count; i++)
             {
                 var newsletter = new Newsletter()
                 {
-                    HostIds = Enumerable.Range(0, 2).Select(x => hostIds.GetRandom()).ToList(),
-                    TripIds = Enumerable.Range(0, 2).Select(x => tripIds.GetRandom()).ToList(),
+                    HostIds = hosts.Select(h => h.Id).Take(countH).ToList(),
+                    TripIds = trips.Select(t => t.Id).Take(countT).ToList(),
+                    // [YOGESH] - Assign the TripHostOrder setting value to the TripHostOrder property of the Newsletter.
+                    TripHostOrder = tripHostOrder
                 };
-
                 db.Save(newsletter);
+                for (int j = 0; j < countH; j++)
+                {
+                    hosts[j].UseCount++;
+                }
+                hosts = hosts.OrderBy(m => m.UseCount).ToList();
+                for (int j = 0; j < countT; j++)
+                {
+                    trips[j].UseCount++;
+                }
+                trips = trips.OrderBy(m => m.UseCount).ToList();
             }
+            db.SaveAll(hosts);
+            db.SaveAll(trips);
+            #endregion
+
+            #region [YOGESH] - For task 1 only
+            //var hostIds = db.GetAll<Host>().Select(h => h.Id).ToArray();
+            //var tripIds = db.GetAll<Trip>().Select(t => t.Id).ToArray();
+
+            //for (int i = 0; i < count; i++)
+            //{
+            //    var newsletter = new Newsletter()
+            //    {
+            //        HostIds = Enumerable.Range(0, countH).Select(x => hostIds.GetRandom()).ToList(),
+            //        TripIds = Enumerable.Range(0, countT).Select(x => tripIds.GetRandom()).ToList(),
+            //        // [YOGESH] - Assign the TripHostOrder setting value to the TripHostOrder property of the Newsletter.
+            //        TripHostOrder = tripHostOrder
+            //    };
+
+            //    db.Save(newsletter);
+            //}
+            #endregion
 
             TempData["notification"] = $"Created {count} newsletters";
 
@@ -48,13 +85,29 @@ namespace InterviewTest.Controllers
             var db = GetDatabase();
 
             var newsletter = db.Get<Newsletter>(id);
+            // [YOGESH] - Get the TripHostOrder for the newsletter and convert to a char array.
+            var tripHostOrder = newsletter.TripHostOrder;
+            char[] tripHostChars = tripHostOrder.ToCharArray();
 
-            var viewModel = new NewsletterViewModel
+            // [YOGESH] - Add the Trip and Host in the required sequence to the NewsletterViewModel.
+            var viewModel = new NewsletterViewModel();
+            viewModel.Items = new List<object>();
+            int countT = 0;
+            int countH = 0;
+            for (int i = 0; i < tripHostChars.Count(); i++)
             {
-                Items = newsletter.TripIds.Select(tid => Convert(db.Get<Trip>(tid))).Cast<object>()
-                    .Union(newsletter.HostIds.Select(hid => Convert(db.Get<Host>(hid))))
-                    .ToList(),
-            };
+                if (tripHostChars[i] == 'T')
+                    viewModel.Items.Add(Convert(db.Get<Trip>(newsletter.TripIds[countT++])));
+                else
+                    viewModel.Items.Add(Convert(db.Get<Host>(newsletter.HostIds[countH++])));
+            }
+
+            //var viewModel = new NewsletterViewModel
+            //{
+            //    Items = newsletter.TripIds.Select(tid => Convert(db.Get<Trip>(tid))).Cast<object>()
+            //        .Union(newsletter.HostIds.Select(hid => Convert(db.Get<Host>(hid))))
+            //        .ToList(),
+            //};
 
             return View("Newsletter", viewModel);
         }
@@ -91,7 +144,7 @@ namespace InterviewTest.Controllers
             ImageUrl = host.ImageUrl,
             Job = host.Job,
         };
-        
+
         private NewsletterTripViewModel Convert(Trip trip, string hostName = null) => new NewsletterTripViewModel
         {
             Name = trip.Name,
@@ -101,7 +154,7 @@ namespace InterviewTest.Controllers
         };
 
         private FileSystemDatabase GetDatabase() => new FileSystemDatabase();
-        
+
     }
 
     public class NewsletterViewModel

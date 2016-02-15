@@ -70,6 +70,19 @@ namespace InterviewTest.Database
 
         }
 
+        /// <summary>
+        /// [YOGESH] - Added this method to enable saving a List of types IPersistable.
+        /// </summary>
+        /// <typeparam name="T">Any IPersistable type</typeparam>
+        /// <param name="obj">List of type IPersistable</param>
+        public void SaveAll<T>(List<T> obj) where T : IPersistable
+        {
+            foreach (T ele in obj)
+            {
+                Save(ele);
+            }
+        }
+
         private static string GetFolder<T>() => Path.Combine(Root, typeof(T).Name);
         private static string GetFQFilename<T>(string id) => Path.Combine(GetFolder<T>(), id + ".json");
     }

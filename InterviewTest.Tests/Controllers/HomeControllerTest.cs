@@ -24,5 +24,18 @@ namespace InterviewTest.Tests.Controllers
             // Assert
             Assert.IsNotNull(result);
         }
+
+        [TestMethod]
+        public void SetNewsletterFormat()
+        {
+            // Arrange
+            HomeController controller = new HomeController();
+
+            // Act
+            ActionResult result = controller.SetNewsletterFormat(new TripHostOrderViewModel() { Order = "" });
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
     }
 }
