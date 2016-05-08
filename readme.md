@@ -1,3 +1,5 @@
+[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
+
 Scenario
 --------
 Vidados sends out lots of HTML newsletters.  These feature different trips and hosts (the people that supply the holidays).
