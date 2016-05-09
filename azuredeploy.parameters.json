@@ -7,9 +7,6 @@
     },
     "hostingPlanName": {
       "value": "GEN-UNIQUE"
-    },
-    "storageAccountType": {
-      "value": "Standard_GRS"
     }
   }
 }
