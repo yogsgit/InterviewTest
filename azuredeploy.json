@@ -3,13 +3,20 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "siteName": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "The name of the web app that you wish to create."
     },
     "hostingPlanName": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+          "description": "The name of the App Service plan to use for hosting the web app."
+        }
     },
     "siteLocation": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+          "description": "The hosting location for the site."
     },
     "sku": {
       "type": "string",
@@ -19,7 +26,9 @@
         "Basic",
         "Standard"
       ],
-      "defaultValue": "Free"
+      "defaultValue": "Free",
+      "metadata": {
+          "description": "The pricing tier for the hosting plan."
     },
     "workerSize": {
       "type": "string",
@@ -28,7 +37,9 @@
         "1",
         "2"
       ],
-      "defaultValue": "0"
+      "defaultValue": "0",
+      "metadata": {
+          "description": "The instance size of the hosting plan (small, medium, or large)."
     },
     "repoUrl": {
       "type": "string"
