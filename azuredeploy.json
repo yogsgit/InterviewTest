@@ -6,17 +6,19 @@
       "type": "string",
       "metadata": {
         "description": "The name of the web app that you wish to create."
+      }
     },
     "hostingPlanName": {
       "type": "string",
       "metadata": {
-          "description": "The name of the App Service plan to use for hosting the web app."
-        }
+        "description": "The name of the App Service plan to use for hosting the web app."
+      }
     },
     "siteLocation": {
       "type": "string",
       "metadata": {
-          "description": "The hosting location for the site."
+        "description": "The hosting location for the site."
+      }
     },
     "sku": {
       "type": "string",
@@ -28,7 +30,8 @@
       ],
       "defaultValue": "Free",
       "metadata": {
-          "description": "The pricing tier for the hosting plan."
+        "description": "The pricing tier for the hosting plan."
+      }
     },
     "workerSize": {
       "type": "string",
@@ -39,7 +42,8 @@
       ],
       "defaultValue": "0",
       "metadata": {
-          "description": "The instance size of the hosting plan (small, medium, or large)."
+        "description": "The instance size of the hosting plan (small, medium, or large)."
+      }
     },
     "repoUrl": {
       "type": "string"
@@ -48,23 +52,23 @@
       "type": "string"
     },
     "storageAccountType": {
-        "type": "string",
-        "defaultValue": "Standard_LRS",
-        "allowedValues": [
-          "Standard_LRS",
-          "Standard_GRS",
-          "Standard_ZRS",
-          "Premium_LRS"
-        ],
-        "metadata": {
-          "description": "Storage Account type"
-        }
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "allowedValues": [
+        "Standard_LRS",
+        "Standard_GRS",
+        "Standard_ZRS",
+        "Premium_LRS"
+      ],
+      "metadata": {
+        "description": "Storage Account type"
       }
+    }
   },
   "variables": {
-      "apiVersion": "2015-06-15",
-      "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'standardsa')]"
-    },
+    "apiVersion": "2015-06-15",
+    "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'standardsa')]"
+  },
   "resources": [
     {
       "apiVersion": "2014-06-01",
@@ -117,13 +121,13 @@
           }
         },
         {
-          "type": "Microsoft.Storage/storageAccounts",
-          "name": "[variables('storageAccountName')]",
           "apiVersion": "[variables('apiVersion')]",
-          "location": "[parameters('siteLocation')],
+          "location": "[parameters('siteLocation')]",
+          "name": "[variables('storageAccountName')]",
           "properties": {
             "accountType": "[parameters('storageAccountType')]"
-          }
+          },
+          "type": "Microsoft.Storage/storageAccounts"
         }
       ]
     }
