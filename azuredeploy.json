@@ -127,7 +127,10 @@
           "properties": {
             "accountType": "[parameters('storageAccountType')]"
           },
-          "type": "Microsoft.Storage/storageAccounts"
+          "type": "Microsoft.Storage/storageAccounts",
+          "dependsOn": [
+            "[concat('Microsoft.Web/Sites/', parameters('siteName'))]"
+          ]
         }
       ]
     }
